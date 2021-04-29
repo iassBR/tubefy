@@ -119,7 +119,10 @@ class Register extends Component
             $response = Http::get('https://viacep.com.br/ws/' . $cep . '/json/');
 
             $data = $response->json();  
-            if ($data) {
+
+            if (isset($data['erro']) && $data['erro'] == true) {
+                session()->flash('error', 'Ops! Nenhum endereço encontrado!');
+            }else{
                 $this->endereco->cep = $data['cep'];
                 $this->endereco->endereco = $data['logradouro'];
                 $this->endereco->bairro = $data['bairro'];
@@ -128,9 +131,7 @@ class Register extends Component
                 $this->endereco->complemento = $data['complemento'];
             }
 
-            if (!$data) {
-                session()->flash('error', 'Ops! Nenhum endereço encontrado!');
-            }
+            
         }
     }
 
