@@ -23,15 +23,17 @@
 
                     <div class=" space-y-4 ">
                         <div class="inline-flex items-center mr-2">
-                            <input wire:model="tipo_pessoa" id="participa_programa_socialS" name="tipo_pessoa" type="radio"
-                                class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" value="1">
+                            <input wire:model="tipo_pessoa" id="participa_programa_socialS" name="tipo_pessoa"
+                                type="radio" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                                value="1">
                             <label for="push_everything" class="ml-3 block text-sm font-medium text-gray-700">
                                 Pessoa Física
                             </label>
                         </div>
                         <div class="inline-flex items-center">
-                            <input wire:model="tipo_pessoa" id="participa_programa_socialN" name="tipo_pessoa" type="radio"
-                                class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" value="0">
+                            <input wire:model="tipo_pessoa" id="participa_programa_socialN" name="tipo_pessoa"
+                                type="radio" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                                value="0">
                             <label for="push_email" class="ml-3 block text-sm font-medium text-gray-700">
                                 Pessoa Jurídica
                             </label>
@@ -64,8 +66,9 @@
             <div class="col-span-12 mt-4 sm:col-span-6">
                 <x-label for="data_nascimento" class="font-semibold" :value="__('* Data Nascimento')" />
 
-                <x-input wire:model="data_nascimento" id="data_nascimento" class="block  mt-1 w-full" type="text"
-                    name="data_nascimento" :value="old('nome')" autofocus />
+
+                    <x-masked-input mask="'99/99/9999'" wire:model="data_nascimento" name="data_nascimento" type="text"
+                    class="w-full mt-1 block rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
                 @error('data_nascimento') <span class="text-red-700">{{ $message }}</span> @enderror
             </div>
 
@@ -86,8 +89,8 @@
             <div class="col-span-12 mt-4 sm:col-span-6">
                 <x-label for="cpf" class="font-semibold" :value="__('* CPF')" />
 
-                <x-input wire:model="cpf" id="cpf" class="block  mt-1 w-full" type="text" name="cpf" :value="old('cpf')"
-                    autofocus />
+                <x-masked-input mask="'999.999.999-99'" wire:model="cpf" name="cpf" type="text"
+                    class="w-full mt-1 block rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
                 @error('cpf') <span class="text-red-700">{{ $message }}</span> @enderror
             </div>
 
