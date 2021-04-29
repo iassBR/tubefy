@@ -1,4 +1,5 @@
 <div>
+    {{-- <x-auth-validation-errors class="mb-4" :errors="$errors" /> --}}
     {{-- Knowing others is intelligence; knowing yourself is true wisdom. --}}
     <div class=" sm:px-0 mb-2">
         <h3 class="text-lg font-extrabold leading-6 text-gray-900">DADOS CADASTRAIS</h3>
@@ -38,71 +39,29 @@
                                 Pessoa Jurídica
                             </label>
                         </div>
-                        @error('') <span class="text-red-700">{{ $message }}</span>
+                        @error('endereco.') <span class="text-red-700">{{ $message }}</span>
                         @enderror
                     </div>
                 </fieldset>
             </div>
 
+
             <!-- Nome -->
             <div class="col-span-12 mt-2 ">
                 <x-label for="nome" class="font-semibold" :value="__('* Nome')" />
 
-                <x-input wire:model="nome" id="nome" class="block  mt-1 w-full" type="text" name="nome"
-                    :value="old('nome')" autofocus />
+                <x-input wire:model="nome" id="nome"
+                    class="block  mt-1 w-full {{ $errors->has('nome') ? 'border-red-700' : '' }}" type="text"
+                    name="nome" :value="old('nome')" autofocus />
                 @error('nome') <span class="text-red-700">{{ $message }}</span> @enderror
             </div>
 
-            <!-- Sobrenome -->
-            <div class="col-span-12 mt-4 ">
-                <x-label for="sobrenome" class="font-semibold" :value="__('* Sobrenome')" />
-
-                <x-input wire:model="sobrenome" id="sobrenome" class="block  mt-1 w-full" type="text" name="sobrenome"
-                    :value="old('sobrenome')" autofocus />
-                @error('sobrenome') <span class="text-red-700">{{ $message }}</span> @enderror
-            </div>
-
-            <!-- DataNascimento -->
-            <div class="col-span-12 mt-4 sm:col-span-6">
-                <x-label for="data_nascimento" class="font-semibold" :value="__('* Data Nascimento')" />
-
-
-                    <x-masked-input mask="'99/99/9999'" wire:model="data_nascimento" name="data_nascimento" type="text"
-                    class="w-full mt-1 block rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-                @error('data_nascimento') <span class="text-red-700">{{ $message }}</span> @enderror
-            </div>
-
-            <!-- Sexo -->
-            <div class="col-span-12 mt-4 sm:col-span-6">
-                <x-label for="sexo" :value="__('Sexo')" />
-                <select wire:model="sexo" name="sexo" id="sexo"
-                    class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                    <option value="">Selecione</option>
-                    <option value="feminino">Feminino</option>
-                    <option value="masculino">Masculino</option>
-                    <option value="outro">Outros</option>
-                </select>
-                @error('sexo') <span class="text-red-700">{{ $message }}</span> @enderror
-            </div>
-
-            <!-- CPF -->
-            <div class="col-span-12 mt-4 sm:col-span-6">
-                <x-label for="cpf" class="font-semibold" :value="__('* CPF')" />
-
-                <x-masked-input mask="'999.999.999-99'" wire:model="cpf" name="cpf" type="text"
-                    class="w-full mt-1 block rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-                @error('cpf') <span class="text-red-700">{{ $message }}</span> @enderror
-            </div>
-
-            <!-- RG -->
-            <div class="col-span-12 mt-4 sm:col-span-6">
-                <x-label for="rg" class="font-semibold" :value="__('RG')" />
-
-                <x-input wire:model="rg" id="rg" class="block  mt-1 w-full" type="text" name="rg" :value="old('rg')"
-                    autofocus />
-                @error('rg') <span class="text-red-700">{{ $message }}</span> @enderror
-            </div>
-
+            {{-- Form dinâmico --}}
+            @if ($this->tipo_pessoa_fisica == true)
+                @include('livewire.auth.partials._pessoa_fisica')
+            @else
+                @include('livewire.auth.partials._pessoa_juridica')
+            @endif
 
         </div>
 
@@ -110,15 +69,16 @@
         <div class="grid grid-cols-12 gap-4">
             <div class=" sm:px-0 mt-2 -mb-4 col-span-12">
                 <h3 class="text-lg font-bold leading-6 text-gray-900">Endereço</h3>
-
             </div>
 
             <!-- Identificação -->
             <div class="col-span-12 mt-4 sm:col-span-6">
-                <x-label for="indentificacao" class="font-semibold" :value="__('* Identificação')" />
+                <x-label for="identificacao" class="font-semibold" :value="__('* Identificação')" />
 
-                <x-input id="indentificacao" class="block  mt-1 w-full" type="text" name="indentificacao"
-                    :value="old('identificacao')" autofocus />
+                <x-input wire:model="endereco.identificacao" id="identificacao"
+                    class="block  mt-1 w-full {{ $errors->has('endereco.identificacao') ? 'border-red-700' : '' }}"
+                    type="text" name="identificacao" :value="old('identificacao')" autofocus />
+                @error('endereco.identificacao') <span class="text-red-700">{{ $message }}</span> @enderror
                 <p class="mt-1 text-xs text-gray-600">
                     ex: Escritório, Casa, etc.
                 </p>
@@ -128,74 +88,102 @@
             <div class="col-span-12 mt-4 sm:col-span-6">
                 <x-label for="destinario" class="font-semibold" :value="__('Destinatário')" />
 
-                <x-input id="destinario" class="block  mt-1 w-full" type="text" name="destinario"
-                    :value="old('destinario')" autofocus />
+                <x-input wire:model="endereco.destinatario" id="destinario"
+                    class="block  mt-1 w-full {{ $errors->has('endereco.destinario') ? 'border-red-700' : '' }}"
+                    type="text" name="destinario" :value="old('destinario')" autofocus />
+                @error('endereco.destinario') <span class="text-red-700">{{ $message }}</span> @enderror
                 <p class="mt-1 text-xs text-gray-600">
                     Informar o nome e o sobrenome do destinatário.
                 </p>
+
             </div>
 
             <!-- CEP -->
             <div class="col-span-12 mt-4 sm:col-span-6">
                 <x-label for="cep" class="font-semibold" :value="__('* CEP')" />
 
-                <x-input id="cep" class="block  mt-1 w-full" type="text" name="cep" :value="old('cep')" autofocus />
+                <x-input wire:model="endereco.cep" id="cep"
+                    class="block  mt-1 w-full {{ $errors->has('endereco.cep') ? 'border-red-700' : '' }}" type="text"
+                    name="cep" :value="old('cep')" autofocus />
+                @error('endereco.cep') <span class="text-red-700">{{ $message }}</span> @enderror
             </div>
 
             <!-- Endereço -->
             <div class="col-span-12 mt-4 sm:col-span-6">
                 <x-label for="endereco" class="font-semibold" :value="__('* Endereço')" />
 
-                <x-input id="endereco" class="block  mt-1 w-full" type="text" name="endereco" :value="old('endereco')"
-                    autofocus />
+                <x-input wire:model="endereco.endereco" id="endereco"
+                    class="block  mt-1 w-full {{ $errors->has('endereco.endereco') ? 'border-red-700' : '' }}"
+                    type="text" name="endereco" :value="old('endereco')" autofocus />
+                @error('endereco.endereco') <span class="text-red-700">{{ $message }}</span> @enderror
             </div>
 
             <!-- Número -->
             <div class="col-span-12 mt-4 sm:col-span-6">
                 <x-label for="numero" class="font-semibold" :value="__('* Número')" />
 
-                <x-input id="numero" class="block  mt-1 w-full" type="text" name="data_nascimento"
-                    :value="old('numero')" autofocus />
+                <x-input wire:model="endereco.numero" id="numero"
+                    class="block  mt-1 w-full {{ $errors->has('endereco.numero') ? 'border-red-700' : '' }}" type="text"
+                    name="data_nascimento" :value="old('numero')" autofocus />
+                @error('endereco.numero') <span class="text-red-700">{{ $message }}</span> @enderror
             </div>
 
             <!-- Complemento -->
             <div class="col-span-12 mt-4 sm:col-span-6">
                 <x-label for="complemento" class="font-semibold" :value="__('* Complemento')" />
 
-                <x-input id="complemento" class="block  mt-1 w-full" type="text" name="complemento"
-                    :value="old('complemento')" autofocus />
+                <x-input wire:model="endereco.complemento" id="complemento"
+                    class="block  mt-1 w-full {{ $errors->has('endereco.complemento') ? 'border-red-700' : '' }}"
+                    type="text" name="complemento" :value="old('complemento')" autofocus />
+                @error('endereco.complemento') <span class="text-red-700">{{ $message }}</span> @enderror
+                <p class="mt-1 text-xs text-gray-600">
+                    Informar, por exemplo, o número do apto, bloco, sítio, etc. Deve ser algo que informe exatamente
+                    onde mora.
+                </p>
             </div>
 
             <!-- Bairro -->
             <div class="col-span-12 mt-4 sm:col-span-6">
                 <x-label for="bairro" class="font-semibold" :value="__('* Bairro')" />
 
-                <x-input id="bairro" class="block  mt-1 w-full" type="text" name="bairro" :value="old('bairro')"
-                    autofocus />
+                <x-input wire:model="endereco.bairro" id="bairro"
+                    class="block  mt-1 w-full {{ $errors->has('endereco.bairro') ? 'border-red-700' : '' }}" type="text"
+                    name="bairro" :value="old('bairro')" autofocus />
+                @error('endereco.bairro') <span class="text-red-700">{{ $message }}</span> @enderror
             </div>
 
             <!-- Cidade -->
             <div class="col-span-12 mt-4 sm:col-span-6">
                 <x-label for="cidade" class="font-semibold" :value="__('* Cidade')" />
 
-                <x-input id="cidade" class="block  mt-1 w-full" type="text" name="cidade" :value="old('cidade')"
-                    autofocus />
+                <x-input wire:model="endereco.cidade" id="cidade"
+                    class="block  mt-1 w-full {{ $errors->has('endereco.cidade') ? 'border-red-700' : '' }}" type="text"
+                    name="cidade" :value="old('cidade')" autofocus />
+                @error('endereco.cidade') <span class="text-red-700">{{ $message }}</span> @enderror
             </div>
 
             <!-- Estado -->
             <div class="col-span-12 mt-4 sm:col-span-6">
-                <x-label for="estado" class="font-semibold" :value="__('* Estado')" />
+                <x-label for="uf" class="font-semibold" :value="__('* Estado')" />
 
-                <x-input id="estado" class="block  mt-1 w-full" type="text" name="estado" :value="old('estado')"
-                    autofocus />
+                <x-input wire:model="endereco.uf" id="uf"
+                    class="block  mt-1 w-full {{ $errors->has('endereco.uf') ? 'border-red-700' : '' }}" type="text"
+                    name="uf" :value="old('uf')" autofocus />
+                @error('endereco.uf') <span class="text-red-700">{{ $message }}</span> @enderror
             </div>
 
             <!-- Referência -->
             <div class="col-span-12 mt-4 sm:col-span-6">
                 <x-label for="referencia" class="font-semibold" :value="__('* Referência')" />
 
-                <x-input id="referencia" class="block  mt-1 w-full" type="text" name="referencia"
-                    :value="old('referencia')" autofocus />
+                <x-input wire:model="endereco.referencia" id="referencia"
+                    class="block  mt-1 w-full {{ $errors->has('endereco.referencia') ? 'border-red-700' : '' }}"
+                    type="text" name="referencia" :value="old('referencia')" autofocus />
+                @error('endereco.referencia') <span class="text-red-700">{{ $message }}</span> @enderror
+                <p class="mt-1 text-xs text-gray-600">
+                    Informar local próximo, por exemplo, um mercadinho, igreja, rua principal, etc. Um local conhecido
+                    na área onde mora.
+                </p>
             </div>
 
         </div>
@@ -211,21 +199,24 @@
             <div class="col-span-12 mt-4 sm:col-span-6">
                 <x-label for="celular" class="font-semibold" :value="__('* Celular')" />
 
-                <x-input id="celular" class="block  mt-1 w-full" type="text" name="celular" :value="old('celular')"
-                    autofocus />
+                <x-input wire:model="celular" id="celular"
+                    class="block  mt-1 w-full {{ $errors->has('celular') ? 'border-red-700' : '' }}" type="text"
+                    name="celular" :value="old('celular')" autofocus />
+                @error('celular') <span class="text-red-700">{{ $message }}</span> @enderror
                 <p class="mt-1 text-xs text-gray-600">
-                    ex: Escritório, Casa, etc.
-                </p>
+                    Ex: DDD + Telefone
             </div>
 
             <!-- Telefone Fixo -->
             <div class="col-span-12 mt-4 sm:col-span-6">
                 <x-label for="telefone" class="font-semibold" :value="__('Telefone')" />
 
-                <x-input id="telefone" class="block  mt-1 w-full" type="text" name="telefone" :value="old('telefone')"
-                    autofocus />
+                <x-input wire:model="telefone" id="telefone"
+                    class="block  mt-1 w-full {{ $errors->has('telefone') ? 'border-red-700' : '' }}" type="text"
+                    name="telefone" :value="old('telefone')" autofocus />
+                @error('telefone') <span class="text-red-700">{{ $message }}</span> @enderror
                 <p class="mt-1 text-xs text-gray-600">
-                    Informar o nome e o sobrenome do destinatário.
+                    Ex: DDD + Telefone
                 </p>
             </div>
         </div>
@@ -240,22 +231,30 @@
             <div class="mt-4 col-span-12 ">
                 <x-label for="email" class="font-semibold" :value="__('* Email')" />
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" />
+                <x-input wire:model="email" id="email" class="block mt-1 w-full {{ $errors->has('email') ? 'border-red-700' : '' }}"
+                    type="email" name="email" :value="old('email')" />
+                @error('email') <span class="text-red-700">{{ $message }}</span> @enderror
             </div>
 
             <!-- Password -->
             <div class="mt-4 col-span-12 sm:col-span-6">
                 <x-label for="password" class="font-semibold" :value="__('* Senha')" />
 
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password"
-                    autocomplete="new-password" />
+                <x-input wire:model="password" id="password"
+                    class="block mt-1 w-full {{ $errors->has('password') ? 'border-red-700' : '' }}"
+                    type="password" name="password" autocomplete="new-password" />
+                @error('password') <span class="text-red-700">{{ $message }}</span> @enderror
+                <p class="mt-1 text-xs text-gray-600">
+                    Digite sua senha com 6 a 15 caracteres.
+                    Lembre-se: sua senha deve conter ao menos uma letra e um dígito.
+                </p>
             </div>
 
             <!-- Confirm Password -->
             <div class="mt-4 col-span-12 sm:col-span-6">
                 <x-label for="password_confirmation" class="font-semibold" :value="__('* Confirme a Senha')" />
 
-                <x-input id="password_confirmation" class="block mt-1 w-full" type="password"
+                <x-input wire:model="password_confirmation" id="password_confirmation" class="block mt-1 w-full" type="password"
                     name="password_confirmation" />
             </div>
         </div>
