@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use App\Providers\RouteServiceProvider;
-
+use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 
 class Register extends Component
@@ -64,16 +64,10 @@ class Register extends Component
         return $rules;
     }
 
-    function messages()
-    {
-        return [
-            'password.letters' => 'A senha deve conter no mínimo uma letra'
-        ];
-    }
-
     public function mount()
     {
         $this->endereco = new Endereco();
+        $this->endereco->cep = null;
         $this->pessoaFisica = new PessoaFisica();
         $this->pessoaJuridica = new PessoaJuridica();
     }
@@ -93,20 +87,19 @@ class Register extends Component
             }
 
             $user = $pessoa->user()->create([
-                    'nome' => $this->nome,
-                    'sobrenome' => $this->sobrenome,
-                    'email' => $this->email,
-                    'telefone' => $this->telefone,
-                    'celular' => $this->celular,
-                    'password' => Hash::make($this->password),
-                ]);
+                'nome' => $this->nome,
+                'sobrenome' => $this->sobrenome,
+                'email' => $this->email,
+                'telefone' => $this->telefone,
+                'celular' => $this->celular,
+                'password' => Hash::make($this->password),
+            ]);
 
             $this->endereco->save();
 
             $this->endereco->user()->associate($user);
 
             return $user;
-
         });
 
         event(new Registered($user));
@@ -114,6 +107,31 @@ class Register extends Component
         Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
+    }
+
+    public function buscaCep()
+    {
+        $replace = ["-", "_"];
+        $cep = str_replace($replace, "", $this->endereco->cep);
+
+        if (strlen($cep) >= 7 ) {
+
+            $response = Http::get('https://viacep.com.br/ws/' . $cep . '/json/');
+
+            $data = $response->json();  
+            if ($data) {
+                $this->endereco->cep = $data['cep'];
+                $this->endereco->endereco = $data['logradouro'];
+                $this->endereco->bairro = $data['bairro'];
+                $this->endereco->uf = $data['uf'];
+                $this->endereco->cidade = $data['localidade'];
+                $this->endereco->complemento = $data['complemento'];
+            }
+
+            if (!$data) {
+                session()->flash('error', 'Ops! Nenhum endereço encontrado!');
+            }
+        }
     }
 
     public function render()

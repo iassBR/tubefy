@@ -10,9 +10,9 @@
 
 <!-- CNPJ -->
 <div class="col-span-12 mt-4 sm:col-span-6">
-    <x-label for="rg" class="font-semibold" :value="__('* CNPJ')" />
+    <x-label for="cnpj" class="font-semibold" :value="__('* CNPJ')" />
 
-    <x-masked-input wire:model="pessoaJuridica.cnpj" id="cnpj" wire:model="cnpj" :mask="'99.999.999/9999-99'"
+    <x-masked-input  mask="'99.999.999/9999-99'" wire:model.ignore="pessoaJuridica.cnpj" id="cnpj" 
         class="{{ $errors->has('pessoaJuridica.cnpj') ? 'border-red-700' : '' }} block mt-1 w-full" type="text"
         name="cnpj" :value="old('cnpj')" />
     @error('pessoaJuridica.cnpj') <span class="text-red-700">{{ $message }}</span> @enderror

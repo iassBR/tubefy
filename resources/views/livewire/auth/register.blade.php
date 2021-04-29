@@ -24,23 +24,22 @@
 
                     <div class=" space-y-4 ">
                         <div class="inline-flex items-center mr-2">
-                            <input wire:model="tipo_pessoa" id="participa_programa_socialS" name="tipo_pessoa"
-                                type="radio" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-                                value="1">
+                            <input wire:model="tipo_pessoa_fisica" id="participa_programa_socialS"
+                                name="tipo_pessoa_fisica" type="radio"
+                                class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" value="1">
                             <label for="push_everything" class="ml-3 block text-sm font-medium text-gray-700">
                                 Pessoa Física
                             </label>
                         </div>
                         <div class="inline-flex items-center">
-                            <input wire:model="tipo_pessoa" id="participa_programa_socialN" name="tipo_pessoa"
-                                type="radio" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-                                value="0">
+                            <input wire:model="tipo_pessoa_fisica" id="participa_programa_socialN"
+                                name="tipo_pessoa_fisica" type="radio"
+                                class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300" value="0">
                             <label for="push_email" class="ml-3 block text-sm font-medium text-gray-700">
                                 Pessoa Jurídica
                             </label>
                         </div>
-                        @error('endereco.') <span class="text-red-700">{{ $message }}</span>
-                        @enderror
+
                     </div>
                 </fieldset>
             </div>
@@ -56,11 +55,21 @@
                 @error('nome') <span class="text-red-700">{{ $message }}</span> @enderror
             </div>
 
+            <!-- Sobrenome -->
+            <div class="col-span-12 mt-4 ">
+                <x-label for="sobrenome" class="font-semibold" :value="__('* Sobrenome')" />
+
+                <x-input wire:model="sobrenome" id="sobrenome"
+                    class="block  mt-1 w-full {{ $errors->has('sobrenome') ? 'border-red-700' : '' }}" type="text"
+                    name="sobrenome" :value="old('sobrenome')" autofocus />
+                @error('sobrenome') <span class="text-red-700">{{ $message }}</span> @enderror
+            </div>
+
             {{-- Form dinâmico --}}
             @if ($this->tipo_pessoa_fisica == true)
-                @include('livewire.auth.partials._pessoa_fisica')
+            @include('livewire.auth.partials._pessoa_fisica')
             @else
-                @include('livewire.auth.partials._pessoa_juridica')
+            @include('livewire.auth.partials._pessoa_juridica')
             @endif
 
         </div>
@@ -97,15 +106,27 @@
                 </p>
 
             </div>
-
+            @if (session()->has('error'))
+            <div id="alert"
+                class="py-4 p-3 mb-4 close cursor-pointer flex items-center justify-between w-full p-2 bg-red-200 shadow rounded">
+                {{ session('error') }}
+                <svg onclick="document.getElementById('alert').remove();" class="fill-current"
+                    xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                    <path
+                        d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
+                    </path>
+                </svg>
+            </div>
+            @endif
             <!-- CEP -->
             <div class="col-span-12 mt-4 sm:col-span-6">
                 <x-label for="cep" class="font-semibold" :value="__('* CEP')" />
-
-                <x-input wire:model="endereco.cep" id="cep"
-                    class="block  mt-1 w-full {{ $errors->has('endereco.cep') ? 'border-red-700' : '' }}" type="text"
-                    name="cep" :value="old('cep')" autofocus />
+                <x-masked-input wire:model="endereco.cep" wire:keydown.debounce.1500ms="buscaCep" mask="'99999-999'"
+                    id="cep" class="{{ $errors->has('endereco.cep') ? 'border-red-700' : '' }} block mt-1 w-full"
+                    type="text" name="cep" :value="old('cep')" />
                 @error('endereco.cep') <span class="text-red-700">{{ $message }}</span> @enderror
+                <p><a href="https://buscacepinter.correios.com.br/app/endereco/index.php?t"
+                        class="text-blue-300 hover:text-blue-600" target="_blank">DESCUBRA SEU CEP</a></p>
             </div>
 
             <!-- Endereço -->
@@ -231,8 +252,9 @@
             <div class="mt-4 col-span-12 ">
                 <x-label for="email" class="font-semibold" :value="__('* Email')" />
 
-                <x-input wire:model="email" id="email" class="block mt-1 w-full {{ $errors->has('email') ? 'border-red-700' : '' }}"
-                    type="email" name="email" :value="old('email')" />
+                <x-input wire:model="email" id="email"
+                    class="block mt-1 w-full {{ $errors->has('email') ? 'border-red-700' : '' }}" type="email"
+                    name="email" :value="old('email')" />
                 @error('email') <span class="text-red-700">{{ $message }}</span> @enderror
             </div>
 
@@ -241,8 +263,8 @@
                 <x-label for="password" class="font-semibold" :value="__('* Senha')" />
 
                 <x-input wire:model="password" id="password"
-                    class="block mt-1 w-full {{ $errors->has('password') ? 'border-red-700' : '' }}"
-                    type="password" name="password" autocomplete="new-password" />
+                    class="block mt-1 w-full {{ $errors->has('password') ? 'border-red-700' : '' }}" type="password"
+                    name="password" autocomplete="new-password" />
                 @error('password') <span class="text-red-700">{{ $message }}</span> @enderror
                 <p class="mt-1 text-xs text-gray-600">
                     Digite sua senha com 6 a 15 caracteres.
@@ -254,8 +276,8 @@
             <div class="mt-4 col-span-12 sm:col-span-6">
                 <x-label for="password_confirmation" class="font-semibold" :value="__('* Confirme a Senha')" />
 
-                <x-input wire:model="password_confirmation" id="password_confirmation" class="block mt-1 w-full" type="password"
-                    name="password_confirmation" />
+                <x-input wire:model="password_confirmation" id="password_confirmation" class="block mt-1 w-full"
+                    type="password" name="password_confirmation" />
             </div>
         </div>
 
