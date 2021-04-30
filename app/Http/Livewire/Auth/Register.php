@@ -40,7 +40,7 @@ class Register extends Component
 
         if ($this->tipo_pessoa_fisica == true) {
             $rules['sobrenome'] = ['required', 'min:4', 'max:30'];
-            $rules['pessoaFisica.data_nascimento'] = ['required'];
+            $rules['pessoaFisica.data_nascimento'] = ['required', 'date_format:d/m/Y'];
             $rules['pessoaFisica.sexo'] = ['nullable', 'in:masculino,feminino,outros'];
             $rules['pessoaFisica.cpf'] = ['required', new CPF(), 'unique:pessoa_fisicas,cpf'];
             $rules['pessoaFisica.rg'] = ['nullable'];
