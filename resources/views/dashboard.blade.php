@@ -10,6 +10,15 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     Você está autenticado !
+
+                    <p lass="my-5">Confira abaixo os dados que você acabou de criar !</p>
+
+                    <p class="my-5">Entidade Usuário</p> 
+                    @dump(auth()->user()) 
+                    <p class="my-5">Entidade Pessoa</p> 
+                    @dump(auth()->user()->pessoa) 
+                    <p class="my-5"> Entidade Endereço</p>
+                    @dump(auth()->user()->endereco) 
                 </div>
             </div>
         </div>

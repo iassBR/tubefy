@@ -48,4 +48,9 @@ class User extends Authenticatable
     public function pessoa(){
     	return $this->morphTo();
     }
+
+    public function endereco()
+    {
+        return $this->hasOne(Endereco::class);
+    }
 }
