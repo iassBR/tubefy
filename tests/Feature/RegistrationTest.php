@@ -2,8 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Http\Livewire\Auth\Register;
+use App\Models\PessoaFisica;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Livewire\Livewire;
 use Tests\TestCase;
 
 class RegistrationTest extends TestCase
@@ -19,14 +23,38 @@ class RegistrationTest extends TestCase
 
     public function test_new_users_can_register()
     {
-        $response = $this->post('/register', [
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => 'password',
-            'password_confirmation' => 'password',
-        ]);
+        // $this->withoutExceptionHandling();
 
-        $this->assertAuthenticated();
-        $response->assertRedirect(RouteServiceProvider::HOME);
+       $response =  Livewire::test(Register::class)
+            ->set([
+                'nome' => 'Test User',
+                'sobrenome' => 'Test User',
+                'email' => 'test@example.com',
+                'tipo_pessoa_fisica' => false,
+                'sobrenome' => 'sobrenome',
+                'telefone' => '999999999',
+                'celular' => '999999999',
+                'password' => 'password',
+                'password_confirmation' => 'password',
+
+
+                'pessoaJuridica.razao_social' => 'igor',
+                'pessoaJuridica.cnpj' => '17.208.221/0001-52',
+                'pessoaJuridica.inscricao_estadual' => '123213231231',
+
+
+                'endereco.endereco' => 'rua odeir viana',
+                'endereco.complemento' => 'muro azul',
+                'endereco.numero' => '555',
+                'endereco.bairro' => 'centenário',
+                'endereco.cidade' => 'Boa Vista',
+                'endereco.uf' => 'RR',
+                'endereco.cep' => '69312-633',
+                'endereco.identificacao' => 'teste',
+                'endereco.destinatario' => 'teste',
+                'endereco.referencia' => 'teste',
+            ])
+            ->call('store');
+
     }
 }
