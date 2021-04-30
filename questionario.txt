@@ -1,0 +1,24 @@
+1. A solução deve ser disponibilizada em Cloud ou On-premise? 
+
+   Cloud, tendo em vista que a centralização de um projeto na nuvem diminui muito o trabalho
+   de manunteção e suporte a um sistema, principalmente quando se trata de um SaaS.
+
+2. Considerando a participação de 4 pessoas técnicas para o desenvolvimento dessa solução, responda qual ferramenta acreditas ser apropriada para o controle de tarefas da equipe, a ferramenta é ágil? 
+
+   Mediante minha experiências em projetos e equipes anteriores o Trello é uma ferramenta gratuita que já disponibiliza recursos
+   suficientes para construir quadros ágeis para o Scrum, Kanban e o ScrumBan.
+
+3. Você se sente capaz de liderar esta equipe? Por quê? 
+
+   Se esse projeto possuir um escopo cosideravelmente grande, creio não ser capaz de o liderar, pois acredito que
+   seja necessário bastante maturidade no desenvolvimento ágil bem como conhecimento técnico em todas as possíveis utilizações e
+   integrações de tecnologia como por exemplo tecnologias nas quais não tenho familiaridade e serviços de terceiros (chatbots, sms, IA).
+
+4. Se pudesse sugerir uma melhoria, mudança ou oportunidade. O que seria? 
+
+   Somente após analisar o escopo inteiro do projeto.
+
+5. Acha válido esse desafio para o processo que está participando?
+
+   Sim ! Pois é possível verificar e dimensionar o real potencial do candidato em termos de desenvolvimento,
+   comunição/expressão, raciocínio e resolução de um dado problema.
