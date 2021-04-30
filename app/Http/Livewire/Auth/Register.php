@@ -46,8 +46,8 @@ class Register extends Component
             $rules['pessoaFisica.rg'] = ['nullable'];
         } else {
             $rules['pessoaJuridica.razao_social'] = ['required', 'min:4', 'max:30'];
-            $rules['pessoaJuridica.cnpj'] = ['required', new CNPJ()];
-            $rules['pessoaJuridica.inscricao_estadual'] = ['required', 'min:4', 'max:30'];
+            $rules['pessoaJuridica.cnpj'] = ['required', new CNPJ(), 'unique:pessoa_juridicas,cnpj'];
+            $rules['pessoaJuridica.inscricao_estadual'] = ['required', 'min:4', 'max:30', 'unique:pessoa_juridicas,inscricao_estadual'];
         }
 
         $rules['endereco.endereco'] = ['required'];
@@ -95,9 +95,9 @@ class Register extends Component
                 'password' => Hash::make($this->password),
             ]);
 
-            $this->endereco->save();
-
             $this->endereco->user()->associate($user);
+
+            $this->endereco->save();
 
             return $user;
         });
