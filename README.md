@@ -47,10 +47,10 @@ Aqui constam os diagramas do desafio.
 
 ### Diagrama de Container - Visão Arquitetural
 
-![](Diagrama-de-Componente-Design-do-App.png)
+![](Diagrama-de-Container-Visão-Arquitetural.png)
 ### Diagrama de Componente - Visão do App
 
-![](Diagrama-de-Container-Visão-Arquitetural.png)
+![](Diagrama-de-Componente-Design-do-App.png)
 
 ### Questionário
 
