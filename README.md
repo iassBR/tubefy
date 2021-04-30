@@ -18,8 +18,9 @@ Uma alternativa recomendada é utilizar o ambiente [Laragon](https://laragon.org
 
 Caso você decida utilizar o laragon, utilize esse [tutorial](https://forum.laragon.org/topic/166/tutorial-how-to-add-another-php-version-php-7-4-php-8-0-updated/63) para atualizar a versão do PHP
 
-Pacotes utilizados
+Pacotes e frameworks utilizados
 
+ - [Laravel 8](https://laravel.com/docs/8.x) Framework PHP usado no projeto !
  - [Livewire](https://github.com/livewire/livewire) Cria componentes dinâmicos e reativos com PHP !
  - [Breeze](https://github.com/laravel/breeze) Implementa autenticação com [Tailwind.css](https://tailwindcss.com/)
  - [InputMask.js](https://github.com/RobinHerbots/Inputmask) Cria máscaras com JavaScript
