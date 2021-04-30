@@ -31,6 +31,7 @@ Pacotes utilizados
  - Abra a pasta do projeto e no terminal de comandos execute  ```composer install```
  - Depois, no terminal execute ```npm install && npm run dev```
  - No terminal de comandos copie o arquivo .env ```cp .env.example .env```
+ - Crie seu banco de dados. 
  - Edite no arquivo .env as informações necessárias para acessar o banco de dados conforme o modelo de exemplo que está contido no mesmo.
  - Após isso execute no terminal
     ```
