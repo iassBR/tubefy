@@ -42,6 +42,7 @@ Pacotes e frameworks utilizados
     ```
  - Caso você esteja usando o Laragon, basta acessar ```http://tubefy.test``` no navegador ;).
  - Caso contrário, acesse ```http://localhost:8000/```
+ - Por fim acesse a rota ```/register``` clicando no link register no canto superior direito
 
 ## Diagramas C4
 
