@@ -16,14 +16,16 @@ Para rodar o tubefy você irá precisar de um ambiente PHP na sua máquina.
 
 Uma alternativa recomendada é utilizar o ambiente [Laragon](https://laragon.org/download/) que já possui o Apache 2.4, Nginx, MySQL 5.7, PHP 7.2, Redis, Memcached, Node.js 11, npm, yarn, git. 
 
+Caso você decida utilizar o laragon, utilize esse [tutorial](https://forum.laragon.org/topic/166/tutorial-how-to-add-another-php-version-php-7-4-php-8-0-updated/63) para atualizar a versão do PHP
+
 Pacotes utilizados
 
  - [Livewire](https://github.com/livewire/livewire) Cria componentes dinâmicos e reativos com PHP !
- - [Breeze](https://github.com/laravel/breeze) Implementa autenticação com tailwind.css
+ - [Breeze](https://github.com/laravel/breeze) Implementa autenticação com [Tailwind.css](https://tailwindcss.com/)
  - [InputMask.js](https://github.com/RobinHerbots/Inputmask) Cria máscaras com JavaScript
 
  ## Instalação
-   *sem o laragon 
+   
  - Clone o [repositório](https://github.com/iassBR/tubefy) na pasta desejada com o seguinte comando ```git clone https://github.com/iassBR/tubefy.git``` 
  - Caso esteja usando o laragon clone o repositório para ```.../laragon/www```
  - Abra a pasta do projeto e no terminal de comandos execute  ```composer install```
@@ -39,9 +41,18 @@ Pacotes utilizados
  - Caso você esteja usando o Laragon, basta acessar ```http://tubefy.test``` no navegador ;).
  - Caso contrário, acesse ```http://localhost:8000/```
 
-## Learning Laravel
+## Diagramas C4
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Aqui constam os diagramas do desafio.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Diagrama de Container - Visão Arquitetural
+
+![](Diagrama-de-Componente-Design-do-App.png)
+### Diagrama de Componente - Visão do App
+
+![](Diagrama-de-Container-Visão-Arquitetural.png)
+
+### Questionário
+
+![](questionario.txt)
 
